@@ -13,9 +13,9 @@ export async function MovieList(isIncrement, genre) {
   );
 
   await fetch(
-    `https://api.themoviedb.org/3/discover/movie?api_key=${
-      Env.apiKey
-    }&language=es-Es&page=${page}${genre != -1 ? `&with_genres=${genre}` : ""}`
+    `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=es-Es&page=${page}${
+      genre != -1 ? `&with_genres=${genre}` : ""
+    }`
   )
     .then((response) => response.json())
     .then((result) => {
