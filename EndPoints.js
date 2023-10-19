@@ -1,5 +1,3 @@
-import Env from "./Env.js";
-
 let page = 0;
 
 export async function MovieList(isIncrement, genre) {
@@ -7,9 +5,9 @@ export async function MovieList(isIncrement, genre) {
 
   isIncrement ? (page += 1) : page > 1 ? (page -= 1) : (page = 1);
   console.log(
-    `https://api.themoviedb.org/3/discover/movie?api_key=${
-      Env.apiKey
-    }&language=es-Es${genre != -1 ? `&with_genres=${genre}` : ""}&page=${page}`
+    `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=es-Es${
+      genre != -1 ? `&with_genres=${genre}` : ""
+    }&page=${page}`
   );
 
   await fetch(
@@ -26,7 +24,7 @@ export async function MovieList(isIncrement, genre) {
 
 export function MovieId(id) {
   fetch(
-    `https://api.themoviedb.org/3/movie/${id}?api_key=${Env.apiKey}&language=es-Es`
+    `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=es-Es`
   )
     .then((response) => response.json())
     .then((data) => console.log(data));
