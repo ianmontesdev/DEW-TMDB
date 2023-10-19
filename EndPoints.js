@@ -1,11 +1,20 @@
 import Env from "./Env.js";
 
-export function MovieList(page) {
-  fetch(
+let page = 0;
+
+export async function MovieList(isIncrement) {
+  let data = "";
+
+  isIncrement ? (page += 1) : page > 1 ? (page -= 1) : (page = 1);
+
+  await fetch(
     `https://api.themoviedb.org/3/discover/movie?api_key=${Env.apiKey}&language=es-Es&page=${page}`
   )
     .then((response) => response.json())
-    .then((data) => console.log(data));
+    .then((result) => {
+      data = result;
+    });
+  return data;
 }
 
 export function MovieId(id) {
