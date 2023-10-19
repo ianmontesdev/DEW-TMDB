@@ -1,5 +1,7 @@
 let page = 0;
 
+const apiKey = "29f6dab2e82da2c3abbb6017467bf0f2";
+
 export async function MovieList(isIncrement, genre) {
   let data;
 
