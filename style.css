@@ -40,3 +40,32 @@ main span {
   margin: 0 auto;
   margin-bottom: 1rem;
 }
+
+#genre-list {
+  display: flex;
+  gap: 1rem;
+  width: 90vw;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  margin: 0 auto;
+  padding: 1rem;
+}
+#genre-list > span {
+  padding: 2rem;
+  line-height: 0;
+  background-color: grey;
+  border-radius: 1rem;
+  font-weight: 500;
+  color: white;
+}
+
+#genre-list::-webkit-scrollbar {
+  height: 10px;
+  background-color: grey;
+  border-radius: 10px;
+}
+
+#genre-list::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 10px;
+}

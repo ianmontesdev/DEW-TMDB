@@ -1,14 +1,22 @@
-import { MovieList, MovieId, MovieImage } from "./EndPoints.js";
-
+import {
+  MovieList,
+  MovieId,
+  MovieImage,
+  GenreList,
+  setPage,
+} from "./EndPoints.js";
+let incrementBtn = document.querySelector("#increment-btn");
+let decrementBtn = document.querySelector("#decrement-btn");
 let container = document.querySelector("#container");
+let genreList = document.querySelector("#genre-list");
 let pages = document.querySelector("p span");
+let genreFilter = -1;
 
-function paintMovies(isIncrement) {
-  container.textContent = "";
+function paintMovies(isIncrement, genre) {
+  container.innerHTML = "";
 
-  MovieList(isIncrement).then((movies) => {
+  MovieList(isIncrement, genre).then((movies) => {
     pages.textContent = `Page ${movies.page} of ${movies.total_pages}`;
-    console.log(movies);
 
     movies.results.forEach((movie) => {
       let article = document.createElement("article");
@@ -27,16 +35,49 @@ function paintMovies(isIncrement) {
   });
 }
 
-paintMovies(true);
-
-let incrementBtn = document
-  .querySelector("#increment-btn")
-  .addEventListener("click", () => {
-    paintMovies(true);
+async function paintList() {
+  let data;
+  await GenreList().then((genres) => {
+    data = genres.genres;
   });
 
-let decrementBtn = document
-  .querySelector("#decrement-btn")
-  .addEventListener("click", () => {
-    paintMovies(false);
+  data.forEach((genre) => {
+    let span = document.createElement("span");
+    span.setAttribute("id", genre.id);
+    span.textContent = genre.name;
+    console.log(genreFilter);
+    span.addEventListener("click", (e) => {
+      genreFilter = e.target.getAttribute("id");
+      setPage(0);
+      paintMovies(true, e.target.getAttribute("id"));
+    });
+    genreList.appendChild(span);
   });
+  removeBtns;
+  loadBtns();
+}
+
+paintList();
+paintMovies(true, genreFilter);
+
+function loadBtns() {
+  incrementBtn.addEventListener("click", () => {
+    paintMovies(true, genreFilter);
+  });
+
+  decrementBtn.addEventListener("click", () => {
+    alert(genreFilter);
+    paintMovies(false, genreFilter);
+  });
+}
+
+function removeBtns() {
+  incrementBtn.removeEventListener("click", () => {
+    paintMovies(true, genreFilter);
+  });
+
+  decrementBtn.removeEventListener("click", () => {
+    alert(genreFilter);
+    paintMovies(false, genreFilter);
+  });
+}
