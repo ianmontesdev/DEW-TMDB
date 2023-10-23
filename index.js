@@ -5,33 +5,32 @@ import {
   GenreList,
   setPage,
 } from "./EndPoints.js";
-let incrementBtn = document.querySelector("#increment-btn");
-let decrementBtn = document.querySelector("#decrement-btn");
+let incrementBtn = document.querySelectorAll(".increment-btn");
+let decrementBtn = document.querySelectorAll(".decrement-btn");
 let container = document.querySelector("#container");
 let genreList = document.querySelector("#genre-list");
-let pages = document.querySelector("p span");
+let pages = document.querySelectorAll("p span");
 let genreFilter = -1;
 
-function paintMovies(isIncrement, genre) {
+function paintMovies(movies) {
   container.innerHTML = "";
+  pages.forEach((page) => {
+    page.textContent = `Page ${movies.page} of ${movies.total_pages}`;
+  });
 
-  MovieList(isIncrement, genre).then((movies) => {
-    pages.textContent = `Page ${movies.page} of ${movies.total_pages}`;
+  movies.results.forEach((movie) => {
+    let article = document.createElement("article");
+    let header = document.createElement("header");
+    let footer = document.createElement("footer");
+    let img = document.createElement("img");
+    let span = document.createElement("span");
+    img.setAttribute("src", MovieImage(movie.poster_path));
+    span.textContent = movie.title;
 
-    movies.results.forEach((movie) => {
-      let article = document.createElement("article");
-      let header = document.createElement("header");
-      let footer = document.createElement("footer");
-      let img = document.createElement("img");
-      let span = document.createElement("span");
-      img.setAttribute("src", MovieImage(movie.poster_path));
-      span.textContent = movie.title;
+    article.appendChild(header.appendChild(img));
+    article.appendChild(footer.appendChild(span));
 
-      article.appendChild(header.appendChild(img));
-      article.appendChild(footer.appendChild(span));
-
-      container.appendChild(article);
-    });
+    container.appendChild(article);
   });
 }
 
@@ -49,7 +48,7 @@ async function paintList() {
     span.addEventListener("click", (e) => {
       genreFilter = e.target.getAttribute("id");
       setPage(0);
-      paintMovies(true, e.target.getAttribute("id"));
+      MovieList(true, genreFilter, paintMovies);
     });
     genreList.appendChild(span);
   });
@@ -58,26 +57,32 @@ async function paintList() {
 }
 
 paintList();
-paintMovies(true, genreFilter);
+MovieList(true, genreFilter, paintMovies);
 
 function loadBtns() {
-  incrementBtn.addEventListener("click", () => {
-    paintMovies(true, genreFilter);
+  incrementBtn.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      MovieList(true, genreFilter, paintMovies);
+    });
   });
 
-  decrementBtn.addEventListener("click", () => {
-    alert(genreFilter);
-    paintMovies(false, genreFilter);
+  decrementBtn.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      MovieList(false, genreFilter, paintMovies);
+    });
   });
 }
 
 function removeBtns() {
-  incrementBtn.removeEventListener("click", () => {
-    paintMovies(true, genreFilter);
+  incrementBtn.forEach((btn) => {
+    btn.removeEventListener("click", () => {
+      MovieList(true, genreFilter, paintMovies);
+    });
   });
 
-  decrementBtn.removeEventListener("click", () => {
-    alert(genreFilter);
-    paintMovies(false, genreFilter);
+  decrementBtn.forEach((btn) => {
+    btn.removeEventListener("click", () => {
+      MovieList(false, genreFilter, paintMovies);
+    });
   });
 }

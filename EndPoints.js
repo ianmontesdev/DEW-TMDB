@@ -2,31 +2,31 @@ let page = 0;
 
 const apiKey = "29f6dab2e82da2c3abbb6017467bf0f2";
 
-export async function MovieList(isIncrement, genre) {
-  let data;
-
+export function MovieList(isIncrement, genre, paintFunction) {
   isIncrement ? (page += 1) : page > 1 ? (page -= 1) : (page = 1);
-  console.log(
-    `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=es-Es${
-      genre != -1 ? `&with_genres=${genre}` : ""
-    }&page=${page}`
-  );
 
-  await fetch(
+  fetch(
     `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=es-Es&page=${page}${
       genre != -1 ? `&with_genres=${genre}` : ""
     }`
   )
     .then((response) => response.json())
     .then((result) => {
-      data = result;
+      paintFunction(result);
     });
-  return data;
 }
 
 export function MovieId(id) {
   fetch(
     `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=es-Es`
+  )
+    .then((response) => response.json())
+    .then((data) => console.log(data));
+}
+
+export function MovieTitle(title) {
+  fetch(
+    `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=es-Es&query=${title}`
   )
     .then((response) => response.json())
     .then((data) => console.log(data));
