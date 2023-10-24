@@ -135,11 +135,11 @@ aside {
 }
 
 dialog {
-  width: 50vw;
+  width: 75vw;
   height: auto;
   max-height: 90%;
   margin-top: 25vh;
-  margin-left: 25vw;
+  margin-left: 12.5vw;
   position: relative;
   padding: 1rem;
   padding-right: 2rem;
@@ -154,9 +154,17 @@ dialog p {
   line-height: 1.5rem;
   margin-top: 1rem;
 }
+
 #close-modal {
   position: absolute;
   top: 8px;
   right: 8px;
   font-size: 2rem;
+}
+
+@media screen and (max-width: 1080px) {
+  dialog {
+    width: calc(100vw - 2rem);
+    margin: 1rem;
+  }
 }
