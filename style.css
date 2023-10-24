@@ -32,9 +32,16 @@ article {
   border-radius: 8px;
 }
 
-img {
+article img {
   border-radius: 8px;
   width: 200px;
+}
+
+dialog img {
+  display: block;
+  border-radius: 8px;
+  width: 80%;
+  margin: 0 auto;
 }
 
 main span {
@@ -117,4 +124,39 @@ header i:hover {
 #genre-list::-webkit-scrollbar-thumb {
   background: black;
   border-radius: 10px;
+}
+
+aside {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  background-color: rgba(0, 0, 0, 0.481);
+}
+
+dialog {
+  width: 50vw;
+  height: auto;
+  max-height: 90%;
+  margin-top: 25vh;
+  margin-left: 25vw;
+  position: relative;
+  padding: 1rem;
+  padding-right: 2rem;
+  border-radius: 1rem;
+  border: none;
+}
+
+dialog p {
+  width: 90%;
+  margin: 0 auto;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  margin-top: 1rem;
+}
+#close-modal {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 2rem;
 }

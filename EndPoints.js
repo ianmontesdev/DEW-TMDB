@@ -16,20 +16,21 @@ export function MovieList(isIncrement, genre, paintFunction) {
     });
 }
 
-export function MovieId(id) {
+export function MovieId(e, paintFunction) {
+  let id = e.target.getAttribute("id");
   fetch(
     `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=es-Es`
   )
     .then((response) => response.json())
-    .then((data) => console.log(data));
+    .then((data) => paintFunction(data));
 }
 
-export function MovieTitle(title) {
+export function MovieTitle(title, paintFunction) {
   fetch(
-    `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=es-Es&query=${title}`
+    `https://api.themoviedb.org/3/search/movie?language=es-Es&query=${title}&api_key=${apiKey}`
   )
     .then((response) => response.json())
-    .then((data) => console.log(data));
+    .then((data) => paintFunction(data));
 }
 
 export async function GenreList() {
@@ -45,7 +46,7 @@ export async function GenreList() {
 }
 
 export function MovieImage(imagepath) {
-  return `https://image.tmdb.org/t/p/w500${imagepath}`;
+  return `https://image.tmdb.org/t/p/w1280${imagepath}`;
 }
 
 export function setPage(num) {
